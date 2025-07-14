@@ -57,9 +57,9 @@ class EKFCartPole:
         ca, sa = np.cos(x[2]), np.sin(x[2])
         theta_dd, x_dd = _cartpole_ode(
             ca, sa, x[3], x[1], u,
-            self.params['k'], self.params['m_cart'], self.params['m_pole'],
-            self.params['g'], self.params['J_fric'], self.params['M_fric'],
-            self.params['L'],
+            self.params.k, self.params.m_cart, self.params.m_pole,
+            self.params.g, self.params.J_fric, self.params.M_fric,
+            self.params.L,
         )
         return np.array([x[1], x_dd, x[3], theta_dd])
 
