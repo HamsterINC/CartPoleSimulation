@@ -26,6 +26,9 @@ import numpy as np
 from CartPole.cartpole_equations import _cartpole_ode
 
 import yaml
+import threading                    # new
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
 
 store_path: str = "ekf_noise_cov.yaml"
@@ -198,6 +201,16 @@ class EKFAdaptiveTuner:
         is almost motionless; writes any accepted update to disk.
     """
 
+    class _ConfigEventHandler(FileSystemEventHandler):
+        """One job only: when the YAML changes, push its contents into the tuner."""
+        def __init__(self, tuner: "EKFAdaptiveTuner"):
+            self.tuner = tuner
+
+        def on_modified(self, event):
+            # Ignore directory events; compare real paths to stay cross?platform
+            if os.path.abspath(event.src_path) == os.path.abspath(self.tuner.store_path):
+                self.tuner._reload_from_yaml()
+
     def __init__(
         self,
         ekf: EKFCartPole,
@@ -206,6 +219,9 @@ class EKFAdaptiveTuner:
         eps: float = 1e-7,
         store_path: str = store_path,
         motion_tol: float = 2e-3,
+        *,
+        adapt_phase2: bool = True,
+        watch_config: bool = True,
     ):
         self.ekf = ekf
         self.window = window
@@ -213,12 +229,16 @@ class EKFAdaptiveTuner:
         self.eps = eps
         self.store_path = store_path
         self.motion_tol = motion_tol  # |innovation| below -> "idle"
+        self.adapt_phase2 = adapt_phase2
 
         self.true_buf: deque = deque(maxlen=window)    # (x_true, u)
         self.innov_buf: deque = deque(maxlen=window)   # innovation samples
 
         # restore Q, R if a previous run saved them
         self._restore_covariances()
+
+        if watch_config:
+            self._start_watcher()
 
     # -----------------------------------------------------------------------
     #  public interface
@@ -253,6 +273,9 @@ class EKFAdaptiveTuner:
 
         # Ignore stagnant samples - otherwise R would shrink spuriously
         if np.linalg.norm(innov) < self.motion_tol:
+            return
+
+        if not self.adapt_phase2:
             return
 
         self.innov_buf.append(innov)
@@ -317,6 +340,10 @@ class EKFAdaptiveTuner:
         P (updated in the previous EKF step) keeps the update simple and
         stable, at the cost of a slight bias that vanishes as window -> inf.
         """
+
+        if not self.adapt_phase2:
+            return
+
         V = np.stack(self.innov_buf)        # shape (N, 2)
         S_obs = np.cov(V, rowvar=False, bias=True)
 
@@ -347,9 +374,54 @@ class EKFAdaptiveTuner:
             print("[EKFAdaptiveTuner] failed to load covariances:", exc)
 
     def _save_covariances(self) -> None:
-        data = {"Q": self.ekf.Q.tolist(), "R": self.ekf.R.tolist()}
-        with open(self.store_path, "w") as f:
+        data = {
+            "Q": self.ekf.Q.tolist(),
+            "R": self.ekf.R.tolist(),
+            "alpha": self.alpha,
+            "motion_tol": self.motion_tol,
+            "adapt_phase2": self.adapt_phase2,
+        }
+        tmp = f"{self.store_path}.tmp"
+        with open(tmp, "w") as f:
             yaml.safe_dump(data, f)
+        os.replace(tmp, self.store_path)
+
+    def _reload_from_yaml(self) -> None:
+        """Pull *any* recognised field from the YAML into runtime objects."""
+        try:
+            with open(self.store_path, "r") as f:
+                data = yaml.safe_load(f) or {}
+        except Exception as exc:
+            print("[EKFAdaptiveTuner] YAML reload failed:", exc)
+            return
+
+        # ---- EKF matrices ------------------------------------------------
+        if "Q" in data:
+            self.ekf.Q = np.array(data["Q"], dtype=float)
+        if "R" in data:
+            self.ekf.R = np.array(data["R"], dtype=float)
+
+        # ---- Tuner knobs --------------------------------------------------
+        self.alpha = float(data.get("alpha", self.alpha))
+        self.motion_tol = float(data.get("motion_tol", self.motion_tol))
+        self.adapt_phase2 = bool(data.get("adapt_phase2", self.adapt_phase2))
+
+        print("[EKFAdaptiveTuner] YAML reloaded at runtime.")
+
+    def _start_watcher(self) -> None:
+        """Spawn a daemonised watchdog observer in the background."""
+        handler = self._ConfigEventHandler(self)
+        self._observer = Observer()
+        directory = os.path.dirname(os.path.abspath(self.store_path)) or "."
+        self._observer.schedule(handler, directory, recursive=False)
+        self._observer.daemon = True
+        self._observer.start()
+
+    def close(self) -> None:
+        """Stop the watchdog thread; call once on program shutdown."""
+        if hasattr(self, "_observer"):
+            self._observer.stop()
+            self._observer.join()
 
 
 # --------------------------------------------------------------------------- #
