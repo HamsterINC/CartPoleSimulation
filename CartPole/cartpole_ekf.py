@@ -204,7 +204,7 @@ class EKFAdaptiveTuner:
         window: int = 500,            # >= 10 s at 50 Hz  - intentionally slow
         alpha: float = 0.995,         # heavy inertia as requested
         eps: float = 1e-7,
-        store_path: str = "ekf_noise_cov.npz",
+        store_path: str = store_path,
         motion_tol: float = 2e-3,
     ):
         self.ekf = ekf
