@@ -7,7 +7,7 @@ from Control_Toolkit.Cost_Functions import cost_function_base
 from others.globals_and_utils import load_config
 
 from CartPole.cartpole_parameters import TrackHalfLength, u_max, g, L
-from CartPole.state_utilities import ANGLE_IDX, ANGLE_COS_IDX, ANGLED_IDX, POSITION_IDX
+from CartPole.state_utilities import ANGLE_IDX, ANGLE_COS_IDX, ANGLED_IDX, POSITION_IDX, POSITIOND_IDX
 
 import numpy as np
 
@@ -36,8 +36,8 @@ class quadratic_boundary_grad_minimal(cost_function_base):
             print('{}: {}'.format(key, value))
         print()
 
-        self.stage_cost, self.dd_linear, self.dd_quadratic, self.db, self.ep, self.ekp, self.cc, self.ccrc = [
-            self.lib.to_variable((0.0,), self.lib.float32) for _ in range(8)
+        self.stage_cost, self.dd_linear, self.dd_quadratic, self.db, self.ep, self.ekp, self.ekc, self.cc, self.ccrc = [
+            self.lib.to_variable((0.0,), self.lib.float32) for _ in range(9)
         ]
         self.set_logged_attributes({
             "cost_component_total_stage_cost": lambda: float(self.stage_cost),
@@ -46,6 +46,7 @@ class quadratic_boundary_grad_minimal(cost_function_base):
             "cost_component_db": lambda: float(self.db),
             "cost_component_ep": lambda: float(self.ep),
             "cost_component_ekp": lambda: float(self.ekp),
+            "cost_component_ekc": lambda: float(self.ekc),
             "cost_component_cc": lambda: float(self.cc),
             "cost_component_ccrc": lambda: float(self.ccrc),
         })
@@ -91,6 +92,10 @@ class quadratic_boundary_grad_minimal(cost_function_base):
         """Compute penalty for not balancing pole upright (penalize large angles)"""
         return angleD ** 2
 
+    def _E_kin_cart_cost(self, positionD):
+        """Compute penalty for not balancing pole upright (penalize large angles)"""
+        return positionD ** 2
+
     def _E_kin_scaled_cost(self, angle, angleD, vel_penalty_reg):
         """Compute penalty for not balancing pole upright (penalize large angles)"""
         up_only = (self.variable_parameters.target_equilibrium+1.0)/2.0
@@ -107,14 +112,14 @@ class quadratic_boundary_grad_minimal(cost_function_base):
 
     def weights(self):
         return (self.dd_quadratic_weight_up, self.db_weight_up,
-                self.ep_weight_up, self.ekp_weight_up,
+                self.ep_weight_up, self.ekp_weight_up, self.ekc_weight,
                 self.cc_weight_up, self.vel_penalty_reg
                 )
 
     def stage_cost_components(self, states: TensorType, inputs: TensorType, previous_input: TensorType):
 
 
-        dd_quadratic_weight, db_weight, ep_weight, ekp_weight, cc_weight, vel_penalty_reg = self.weights()
+        dd_quadratic_weight, db_weight, ep_weight, ekp_weight, ekc_weight, cc_weight, vel_penalty_reg = self.weights()
 
         dd_quadratic = dd_quadratic_weight * self._distance_difference_cost_quadratic(
             states[:, :, POSITION_IDX],
@@ -125,25 +130,28 @@ class quadratic_boundary_grad_minimal(cost_function_base):
         ep = ep_weight * self._E_pot_cost(states[:, :, ANGLE_IDX])
         ekp = ekp_weight * self._E_kin_scaled_cost(states[:, :, ANGLE_IDX], states[:, :, ANGLED_IDX], vel_penalty_reg)
 
+        ekc = ekc_weight * self._E_kin_cart_cost(states[:, :, POSITIOND_IDX])
+
         cc = cc_weight * self._CC_cost(inputs)
 
-        return dd_quadratic, db, ep, ekp, cc
+        return dd_quadratic, db, ep, ekp, ekc, cc
 
     def get_stage_cost(self, states: TensorType, inputs: TensorType, previous_input: TensorType):
-        dd_quadratic, db, ep, ekp, cc = self.stage_cost_components(states, inputs, previous_input)
-        stage_cost =  dd_quadratic + db + ep + ekp + cc
+        dd_quadratic, db, ep, ekp, ekc, cc = self.stage_cost_components(states, inputs, previous_input)
+        stage_cost =  dd_quadratic + db + ep + ekp + ekc + cc
         return stage_cost
 
     def get_summed_stage_cost(self, states: TensorType, inputs: TensorType, previous_input: TensorType):
 
-        dd_quadratic, db, ep, ekp, cc = self.stage_cost_components(states, inputs, previous_input)
+        dd_quadratic, db, ep, ekp, ekc, cc = self.stage_cost_components(states, inputs, previous_input)
 
         self.lib.assign(self.dd_quadratic, self.lib.sum(dd_quadratic, 1))
         self.lib.assign(self.db, self.lib.sum(db, 1))
         self.lib.assign(self.ep, self.lib.sum(ep, 1))
         self.lib.assign(self.ekp, self.lib.sum(ekp, 1))
+        self.lib.assign(self.ekc, self.lib.sum(ekc, 1))
         self.lib.assign(self.cc, self.lib.sum(cc, 1))
 
-        self.lib.assign(self.stage_cost, self.dd_quadratic + self.db + self.ep + self.ekp + self.cc)
+        self.lib.assign(self.stage_cost, self.dd_quadratic + self.db + self.ep + self.ekp + self.ekc + self.cc)
         return self.stage_cost
 
