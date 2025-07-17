@@ -1,7 +1,19 @@
 # Sets the features for the live plotter to start with
 # Each row is one chart
-- ['Angle', 'None', 'None']
-- ['Target Position', 'Position', 'None']
-- ['Q', 'None', 'None']
-- ['total_stage_cost', 'None', 'None']
-- ['total_stage_cost', 'None', 'None']
+#- ['Angle', 'Angle_DVS', 'None']
+#- ['Position', 'Position_DVS', 'None']
+#- ['AngleD', 'AngleD_DVS', 'None']
+#- ['PositionD', 'PositionD_DVS', 'None']
+#- ['None', 'None', 'None']
+
+#- ['Angle', 'Angle_EKF', 'None']
+#- ['Position', 'Position_EKF', 'None']
+#- ['AngleD', 'AngleD_EKF', 'None']
+#- ['PositionD', 'PositionD_EKF', 'None']
+#- ['None', 'None', 'None']
+
+- ['Angle', 'Angle_DVS', 'Angle_EKF']
+- ['Position', 'Position_DVS', 'Position_EKF']
+- ['AngleD', 'AngleD_DVS', 'AngleD_EKF']
+- ['PositionD', 'PositionD_DVS', 'PositionD_EKF']
+- ['None', 'None', 'None']
