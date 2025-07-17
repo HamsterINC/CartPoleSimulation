@@ -4,8 +4,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
-import torchvision
-import torchvision.transforms as transforms
+# import torchvision
+# import torchvision.transforms as transforms
 from torch.utils.data import random_split
 from datetime import datetime
 
@@ -36,7 +36,7 @@ BINARIZE_IMAGE_TRESHOLD = float(config.get("BINARIZE_IMAGE_TRESHOLD", 0.75))
 IMG_WIDTH = int(config.get("IMG_WIDTH", 28)) # 16 is suitable for Tiny Tapeout
 IMG_CROP = int(config.get("IMG_CROP", 28))
 # INPUT_SIZE = IMG_WIDTH * IMG_WIDTH
-INPUT_SIZE = 7 * 32
+INPUT_SIZE = 7 * 100
 DATA_SPLIT_SEED = int(config.get("DATA_SPLIT_SEED", 42))
 TRAIN_FRACTION = float(config.get("TRAIN_FRACTION", 0.9))
 NUMBER_OF_CATEGORIES = int(config.get("NUMBER_OF_CATEGORIES", 1))
