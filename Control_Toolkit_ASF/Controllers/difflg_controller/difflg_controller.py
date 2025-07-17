@@ -26,6 +26,7 @@ class DiffLogicGateController():
         else:
             print(f"File {norm_vec_path} does not exist.")
         self.model.eval()
+        self.thresholds = torch.linspace(0, 1, 100)
     
     def predict(self, input_data):
         # Ensure input has 7 elements
@@ -34,22 +35,29 @@ class DiffLogicGateController():
         # Ensure input is a numpy array
         if not isinstance(input_data, np.ndarray):
             input_data = np.array(input_data, dtype=np.float32)
-            input_data = input_data * self.norm_vec
         
-        x_np = input_data.view(np.uint32)
-        bits_list = []
-        for val in x_np:
-            bits = np.unpackbits(
-                np.array([val], dtype=np.uint32).view(np.uint8)
-            )
-            bits_list.append(bits)
+        input_data = input_data * self.norm_vec
+        input_data = np.clip(input_data, -1.0, 1.0) 
+        input_data = torch.tensor(input_data, dtype=torch.float32)
 
-        # Concatenate to a single array of shape [224]
-        bits_concat = np.concatenate(bits_list, axis=0)
+        x_scaled = (input_data + 1) / 2  
+        x_encoded = (x_scaled.unsqueeze(1) >= self.thresholds).float()
+        x = x_encoded.flatten()
+        
+        # x_np = input_data.view(np.uint32)
+        # bits_list = []
+        # for val in x_np:
+        #     bits = np.unpackbits(
+        #         np.array([val], dtype=np.uint32).view(np.uint8)
+        #     )
+        #     bits_list.append(bits)
 
-        # Convert back to torch tensor if needed
-        bits_tensor = torch.from_numpy(bits_concat)
-        x = bits_tensor.type(torch.float32)
+        # # Concatenate to a single array of shape [224]
+        # bits_concat = np.concatenate(bits_list, axis=0)
+
+        # # Convert back to torch tensor if needed
+        # bits_tensor = torch.from_numpy(bits_concat)
+        # x = bits_tensor.type(torch.float32)
         # Ensure input match the model's expected input size
         if x.shape[0] != difflg_model.INPUT_SIZE:
             raise ValueError(f"Input data must have {difflg_model.INPUT_SIZE} elements, got {x.shape[0]}.")
@@ -58,12 +66,3 @@ class DiffLogicGateController():
             output = self.model(x.unsqueeze(0))  # Add batch dimension
             output = torch.clamp(output, -1.0, 1.0)  # Clamp output to [-1, 1]
         return output.item()
-
-
-#Example usage:
-
-controller = DiffLogicGateController()
-controller.load_model()
-test_input = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7], dtype=np.float32)  # Example input
-output = controller.predict(test_input)
-print(f"Predicted output: {output}")
