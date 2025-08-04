@@ -1,0 +1,1303 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     47530,       1295]
+NotebookOptionsPosition[     45474,       1250]
+NotebookOutlinePosition[     45870,       1266]
+CellTagsIndexPosition[     45827,       1263]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"(*", 
+    RowBox[{
+    "Clear", " ", "all", " ", "previous", " ", "definitions", " ", "to", " ", 
+     "avoid", " ", "conflicts"}], "*)"}],
+   FontSize->16], 
+  StyleBox["\[IndentingNewLine]",
+   FontSize->16], 
+  RowBox[{
+   StyleBox[
+    RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}],
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox["\n",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{"(*", 
+     RowBox[{"Define", " ", "parameters"}], "*)"}],
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"mCart", "=", 
+      RowBox[{"Symbol", "[", "\"\<mCart\>\"", "]"}]}], ";"}],
+    FontSize->16], 
+   StyleBox["\n",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"mPole", "=", 
+      RowBox[{"Symbol", "[", "\"\<mPole\>\"", "]"}]}], ";"}],
+    FontSize->16], 
+   StyleBox["\n",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"l", "=", 
+      RowBox[{"Symbol", "[", "\"\<l\>\"", "]"}]}], ";"}],
+    FontSize->16], 
+   StyleBox[" ",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{"(*", 
+     StyleBox[
+      RowBox[{
+       RowBox[{"-", " ", "This"}], " ", "is", " ", "her", " ", "a", " ", 
+       "full", " ", "pole", " ", "length"}], "Code"], "*)"}],
+    FontSize->16], 
+   StyleBox["\n",
+    FontSize->16], 
+   RowBox[{"(*", 
+    StyleBox[
+     RowBox[{
+      RowBox[{"l2", "=", 
+       RowBox[{"Symbol", "[", "\"\<l2\>\"", "]"}]}], ";"}],
+     FontSize->16], 
+    StyleBox[" ",
+     FontSize->16], 
+    StyleBox[
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{
+        StyleBox[
+         RowBox[{"-", " ", "This"}], "Code"], 
+        StyleBox[" ", "Code"], 
+        StyleBox["is", "Code"], 
+        StyleBox[" ", "Code"], 
+        StyleBox["her", "Code"], 
+        StyleBox[" ", "Code"], 
+        StyleBox["a", "Code"], 
+        StyleBox[" ", "Code"], 
+        StyleBox["full", "Code"], 
+        StyleBox[" ", "Code"], 
+        StyleBox["pole", "Code"], 
+        StyleBox[" ", "Code"], 
+        StyleBox["length", "Code"], 
+        StyleBox[" ", "Code"], "of", " ", "second", " ", "pendulum", " ", 
+        RowBox[{"(", 
+         RowBox[{
+         "if", " ", "we", " ", "consider", " ", "double", " ", "pendulum", 
+          " ", "cartpole"}], ")"}]}], ")"}], "*)"}],
+     FontSize->16], "*)"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"g", "=", 
+      RowBox[{"Symbol", "[", "\"\<g\>\"", "]"}]}], ";"}],
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"mPole2", "=", 
+       RowBox[{"Symbol", "[", "\"\<mPole2\>\"", "]"}]}], ";"}], "*)"}],
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox["\n",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{"(*", 
+     RowBox[{"Define", " ", "the", " ", "Lagrangian"}], "*)"}],
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"CartPosition", "=", 
+      RowBox[{"Symbol", "[", "\"\<CartPosition\>\"", "]"}]}], ";"}],
+    FontSize->16], 
+   StyleBox["\n",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"PoleAngle", "=", 
+      RowBox[{"Symbol", "[", "\"\<PoleAngle\>\"", "]"}]}], ";"}],
+    FontSize->16], 
+   StyleBox["\n",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"PoleAngle2", "=", 
+       RowBox[{"Symbol", "[", "\"\<PoleAngle2\>\"", "]"}]}], ";"}], "*)"}],
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"t", "=", 
+      RowBox[{"Symbol", "[", "\"\<t\>\"", "]"}]}], ";"}],
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   RowBox[{
+    RowBox[{
+     StyleBox["lHelper",
+      FontSize->16], 
+     StyleBox[" ",
+      FontSize->16], 
+     StyleBox["=",
+      FontSize->16], 
+     RowBox[{"Symbol", "[", "\"\<lHelper\>\"", "]"}]}], " ", ";"}], 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "location", " ", "of", " ", "an", " ", "infinitesimal", " ", "piece", " ",
+      "of", " ", "penulum"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"r", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"CartPosition", "[", "t", "]"}], "-", 
+        RowBox[{
+         StyleBox["lHelper",
+          FontSize->16], " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"PoleAngle", "[", "t", "]"}], "]"}]}]}], ",", " ", 
+       StyleBox[
+        RowBox[{"lHelper", " ", 
+         RowBox[{"Cos", "[", 
+          RowBox[{"PoleAngle", "[", "t", "]"}], "]"}]}],
+        FontSize->16]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rPrime", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{"r", ",", "t"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{"\"\<Point on pole velocity: \>\"", ",", " ", "rPrime"}], "]"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"VpoleSqr", " ", "=", " ", 
+     RowBox[{"Simplify", "[", 
+      RowBox[{"Dot", "[", 
+       RowBox[{"rPrime", ",", "rPrime"}], "]"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{"\"\<Point on pole speed: \>\"", ",", " ", "VpoleSqr"}], "]"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"TpointDensity", "=", 
+     RowBox[{"0.5", "*", 
+      RowBox[{"(", 
+       RowBox[{"mPole", "/", "l"}], ")"}], " ", 
+      RowBox[{"(", "VpoleSqr", ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Tpole", "=", 
+     RowBox[{"Simplify", "[", 
+      RowBox[{"Integrate", "[", 
+       RowBox[{"TpointDensity", ",", 
+        RowBox[{"{", 
+         RowBox[{"lHelper", ",", "0", ",", "l"}], "}"}]}], "]"}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{"\"\<Rotational kinetic energy pole: \>\"", ",", " ", 
+     RowBox[{"TraditionalForm", "[", 
+      RowBox[{"Simplify", "[", "Tpole", "]"}], "]"}]}], "]"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.930801810134247*^9, 3.9308018801092157`*^9}, {
+  3.930803184894515*^9, 3.9308031916463537`*^9}, {3.9308033368581123`*^9, 
+  3.93080337302197*^9}},
+ CellLabel->
+  "In[192]:=",ExpressionUUID->"a545b516-a0bf-44a0-aa61-d5d851698a2d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Point on pole velocity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["CartPosition", "\[Prime]",
+        MultilineFunction->None], "[", "t", "]"}], "-", 
+      RowBox[{"lHelper", " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"PoleAngle", "[", "t", "]"}], "]"}], " ", 
+       RowBox[{
+        SuperscriptBox["PoleAngle", "\[Prime]",
+         MultilineFunction->None], "[", "t", "]"}]}]}], ",", 
+     RowBox[{
+      RowBox[{"-", "lHelper"}], " ", 
+      RowBox[{"Sin", "[", 
+       RowBox[{"PoleAngle", "[", "t", "]"}], "]"}], " ", 
+      RowBox[{
+       SuperscriptBox["PoleAngle", "\[Prime]",
+        MultilineFunction->None], "[", "t", "]"}]}]}], "}"}]}],
+  SequenceForm[
+  "Point on pole velocity: ", {
+   Derivative[
+     1][$CellContext`CartPosition][$CellContext`t] - $CellContext`lHelper 
+    Cos[
+      $CellContext`PoleAngle[$CellContext`t]] 
+    Derivative[
+     1][$CellContext`PoleAngle][$CellContext`t], -$CellContext`lHelper Sin[
+      $CellContext`PoleAngle[$CellContext`t]] 
+    Derivative[1][$CellContext`PoleAngle][$CellContext`t]}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.930801816100875*^9, {3.9308031650322742`*^9, 3.930803194663536*^9}, 
+   3.930803473403652*^9, 3.9308035065883207`*^9, 3.930807634083363*^9},
+ CellLabel->
+  "During evaluation of \
+In[192]:=",ExpressionUUID->"067e61df-29cd-4d84-9352-2cb5a5bf1bd6"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Point on pole speed: \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{
+      SuperscriptBox["CartPosition", "\[Prime]",
+       MultilineFunction->None], "[", "t", "]"}], "2"], "-", 
+    RowBox[{"2", " ", "lHelper", " ", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"PoleAngle", "[", "t", "]"}], "]"}], " ", 
+     RowBox[{
+      SuperscriptBox["CartPosition", "\[Prime]",
+       MultilineFunction->None], "[", "t", "]"}], " ", 
+     RowBox[{
+      SuperscriptBox["PoleAngle", "\[Prime]",
+       MultilineFunction->None], "[", "t", "]"}]}], "+", 
+    RowBox[{
+     SuperscriptBox["lHelper", "2"], " ", 
+     SuperscriptBox[
+      RowBox[{
+       SuperscriptBox["PoleAngle", "\[Prime]",
+        MultilineFunction->None], "[", "t", "]"}], "2"]}]}]}],
+  SequenceForm[
+  "Point on pole speed: ", 
+   Derivative[1][$CellContext`CartPosition][$CellContext`t]^2 - 
+   2 $CellContext`lHelper Cos[
+     $CellContext`PoleAngle[$CellContext`t]] 
+   Derivative[1][$CellContext`CartPosition][$CellContext`t] 
+   Derivative[
+    1][$CellContext`PoleAngle][$CellContext`t] + $CellContext`lHelper^2 
+    Derivative[1][$CellContext`PoleAngle][$CellContext`t]^2],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.930801816100875*^9, {3.9308031650322742`*^9, 3.930803194663536*^9}, 
+   3.930803473403652*^9, 3.9308035065883207`*^9, 3.930807634084099*^9},
+ CellLabel->
+  "During evaluation of \
+In[192]:=",ExpressionUUID->"fdf96c0a-c072-4d1e-9243-f29fae9773c8"],
+
+Cell[BoxData[
+ StyleBox[
+  InterpretationBox[
+   RowBox[{"\<\"Rotational kinetic energy pole: \"\>", "\[InvisibleSpace]", 
+    TagBox[
+     FormBox[
+      RowBox[{"mPole", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"0.5`", " ", "l", " ", 
+           RowBox[{
+            SuperscriptBox["CartPosition", "\[Prime]",
+             MultilineFunction->None], "(", "t", ")"}], " ", 
+           RowBox[{
+            SuperscriptBox["PoleAngle", "\[Prime]",
+             MultilineFunction->None], "(", "t", ")"}], " ", 
+           RowBox[{"cos", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}]}], "+", 
+         RowBox[{"0.5`", " ", 
+          SuperscriptBox[
+           RowBox[{
+            SuperscriptBox["CartPosition", "\[Prime]",
+             MultilineFunction->None], "(", "t", ")"}], "2"]}], "+", 
+         RowBox[{"0.16666666666666666`", " ", 
+          SuperscriptBox["l", "2"], " ", 
+          SuperscriptBox[
+           RowBox[{
+            SuperscriptBox["PoleAngle", "\[Prime]",
+             MultilineFunction->None], "(", "t", ")"}], "2"]}]}], ")"}]}],
+      TraditionalForm],
+     TraditionalForm,
+     Editable->True]}],
+   SequenceForm["Rotational kinetic energy pole: ", 
+    TraditionalForm[$CellContext`mPole (
+      0.5 Derivative[1][$CellContext`CartPosition][$CellContext`t]^2 - 
+      0.5 $CellContext`l Cos[
+        $CellContext`PoleAngle[$CellContext`t]] 
+      Derivative[1][$CellContext`CartPosition][$CellContext`t] 
+      Derivative[1][$CellContext`PoleAngle][$CellContext`t] + 
+      0.16666666666666666` $CellContext`l^2 
+       Derivative[1][$CellContext`PoleAngle][$CellContext`t]^2)]],
+   Editable->False],
+  FontSize->18]], "Print",
+ CellChangeTimes->{
+  3.930801816100875*^9, {3.9308031650322742`*^9, 3.930803194663536*^9}, 
+   3.930803473403652*^9, 3.9308035065883207`*^9, 3.9308076341016273`*^9},
+ CellLabel->
+  "During evaluation of \
+In[192]:=",ExpressionUUID->"8fa139e6-fc5e-4e07-ba38-a54ff835b87d"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Second", " ", "pole", " ", "on", " ", "top", " ", "of", " ", "the", " ", 
+    "first", " ", "one"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     StyleBox["lHelper2",
+      FontSize->16], 
+     StyleBox[" ",
+      FontSize->16], 
+     StyleBox["=",
+      FontSize->16], 
+     RowBox[{"Symbol", "[", "\"\<lHelper\>\"", "]"}]}], " ", ";", 
+    RowBox[{"(*", " ", 
+     RowBox[{
+     "location", " ", "of", " ", "an", " ", "infinitesimal", " ", "piece", 
+      " ", "of", " ", "penulum"}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"r2", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"CartPosition", "[", "t", "]"}], "-", 
+        RowBox[{"l", " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"PoleAngle", "[", "t", "]"}], "]"}]}], "-", 
+        RowBox[{
+         StyleBox["lHelper2",
+          FontSize->16], " ", 
+         RowBox[{"Sin", "[", 
+          RowBox[{"PoleAngle2", "[", "t", "]"}], "]"}]}]}], ",", " ", 
+       RowBox[{
+        StyleBox[
+         RowBox[{"l", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"PoleAngle", "[", "t", "]"}], "]"}]}],
+         FontSize->16], 
+        StyleBox["+",
+         FontSize->16], " ", 
+        StyleBox[
+         RowBox[{"lHelper2", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"PoleAngle2", "[", "t", "]"}], "]"}]}],
+         FontSize->16]}]}], "}"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"r2Prime", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{"r2", ",", "t"}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"Vpole2Sqr", " ", "=", " ", 
+     RowBox[{"Simplify", "[", 
+      RowBox[{"Dot", "[", 
+       RowBox[{"r2Prime", ",", "r2Prime"}], "]"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Tpoint2Density", "=", " ", 
+     RowBox[{"0.5", "*", 
+      RowBox[{"(", 
+       RowBox[{"mPole2", "/", "l2"}], ")"}], " ", 
+      RowBox[{"(", "Vpole2Sqr", ")"}]}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"Tpole2", "=", 
+     RowBox[{"Simplify", "[", 
+      RowBox[{"Integrate", "[", 
+       RowBox[{"Tpoint2Density", ",", 
+        RowBox[{"{", 
+         RowBox[{"lHelper2", ",", "0", ",", "l2"}], "}"}]}], "]"}], "]"}]}], 
+    ";"}], "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     StyleBox["Tcart",
+      FontSize->16], 
+     StyleBox[" ",
+      FontSize->16], 
+     StyleBox["=",
+      FontSize->16], 
+     StyleBox[" ",
+      FontSize->16], 
+     RowBox[{"mCart", "*", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"CartPosition", "'"}], "[", "t", "]"}], "^", "2"}], "/", 
+       "2"}]}]}], ";"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   RowBox[{
+    RowBox[{
+     StyleBox["V",
+      FontSize->16], 
+     StyleBox[" ",
+      FontSize->16], 
+     StyleBox["=",
+      FontSize->16], 
+     StyleBox[" ",
+      FontSize->16], 
+     RowBox[{"mPole", "*", "g", "*", "l", "*", 
+      RowBox[{
+       RowBox[{"Cos", "[", 
+        RowBox[{"PoleAngle", "[", "t", "]"}], "]"}], "/", "2"}]}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"V2", " ", "=", " ", 
+      RowBox[{"mPole2", "*", "g", "*", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"l", "*", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"PoleAngle", "[", "t", "]"}], "]"}]}], " ", "+", " ", 
+         RowBox[{"(", 
+          RowBox[{"l2", "*", 
+           RowBox[{
+            RowBox[{"Cos", "[", 
+             RowBox[{"PoleAngle2", "[", "t", "]"}], "]"}], " ", "/", "2"}]}], 
+          ")"}]}], ")"}]}]}], ";"}], "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Lagrangian", "=", 
+     RowBox[{"Tcart", " ", "+", "Tpole", "-", "V"}]}], ";"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Lagrangian", "=", 
+      RowBox[{
+      "Tcart", "+", "Tpole", " ", "+", " ", "Tpole2", " ", "-", "V", " ", "-",
+        " ", "V2"}]}], ";"}], "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Compute", " ", "the", " ", "Euler"}], "-", 
+     RowBox[{"Lagrange", " ", "equations"}]}], "*)"}], "\[IndentingNewLine]", 
+   
+   RowBox[{
+    RowBox[{"eqn1", "=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{"Lagrangian", ",", 
+           RowBox[{
+            RowBox[{"PoleAngle", "'"}], "[", "t", "]"}]}], "]"}], ",", "t"}], 
+        "]"}], "-", 
+       RowBox[{"D", "[", 
+        RowBox[{"Lagrangian", ",", 
+         RowBox[{"PoleAngle", "[", "t", "]"}]}], "]"}]}], "==", "0"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"eqn2", "=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{"Lagrangian", ",", 
+           RowBox[{
+            RowBox[{"CartPosition", "'"}], "[", "t", "]"}]}], "]"}], ",", 
+         "t"}], "]"}], "-", 
+       RowBox[{"D", "[", 
+        RowBox[{"Lagrangian", ",", 
+         RowBox[{"CartPosition", "[", "t", "]"}]}], "]"}]}], "==", "0"}]}], 
+    ";"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"eqn3", "=", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"D", "[", 
+         RowBox[{
+          RowBox[{"D", "[", 
+           RowBox[{"Lagrangian", ",", 
+            RowBox[{
+             RowBox[{"PoleAngle2", "'"}], "[", "t", "]"}]}], "]"}], ",", 
+          "t"}], "]"}], "-", 
+        RowBox[{"D", "[", 
+         RowBox[{"Lagrangian", ",", 
+          RowBox[{"PoleAngle2", "[", "t", "]"}]}], "]"}]}], "==", "0"}]}], 
+     ";"}], "*)"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->18], 
+   StyleBox[
+    RowBox[{"(*", 
+     RowBox[{
+     "Solve", " ", "the", " ", "equations", " ", "for", " ", "second", " ", 
+      "derivatives"}], "*)"}],
+    FontSize->16], "\[IndentingNewLine]", 
+   StyleBox[
+    RowBox[{
+     RowBox[{"solAngle", " ", "=", " ", 
+      RowBox[{"Solve", "[", 
+       RowBox[{"eqn1", ",", 
+        RowBox[{
+         RowBox[{"PoleAngle", "''"}], "[", "t", "]"}]}], "]"}]}], ";"}],
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox[
+    RowBox[{
+     RowBox[{"sol", "=", 
+      RowBox[{"Solve", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"eqn1", ",", "eqn2"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"CartPosition", "''"}], "[", "t", "]"}], ",", 
+          RowBox[{
+           RowBox[{"PoleAngle", "''"}], "[", "t", "]"}]}], "}"}]}], "]"}]}], 
+     ";"}],
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"sol", "=", 
+      RowBox[{"Solve", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"eqn1", ",", "eqn2", ",", " ", "eqn3"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"CartPosition", "''"}], "[", "t", "]"}], ",", 
+          RowBox[{
+           RowBox[{"PoleAngle", "''"}], "[", "t", "]"}], ",", " ", 
+          RowBox[{
+           RowBox[{"PoleAngle2", "''"}], "[", "t", "]"}]}], "}"}]}], "]"}]}], 
+     ";"}], "*)"}], "\[IndentingNewLine]", 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->18], 
+   RowBox[{"(*", 
+    RowBox[{
+    "Display", " ", "the", " ", "solutions", " ", "in", " ", 
+     "TraditionalForm"}], "*)"}], 
+   StyleBox["\n",
+    FontSize->18], 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Solution Angle Accel:\>\"", ",", 
+      RowBox[{"TraditionalForm", "[", 
+       RowBox[{"Simplify", "[", "solAngle", "]"}], "]"}]}], "]"}], ";"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->18], 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Solutions:\>\"", ",", 
+      RowBox[{"TraditionalForm", "[", 
+       RowBox[{"Simplify", "[", "sol", "]"}], "]"}]}], "]"}], ";"}], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->18], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->16], 
+   StyleBox["\[IndentingNewLine]",
+    FontSize->18]}]}]], "Input",
+ CellChangeTimes->{{3.9252128221477623`*^9, 3.925212822149843*^9}, {
+   3.925213008431277*^9, 3.925213030532279*^9}, {3.925214366289327*^9, 
+   3.925214495929608*^9}, {3.925214529589654*^9, 3.925214672076234*^9}, {
+   3.925214880443748*^9, 3.925214923939949*^9}, 3.925214974957562*^9, 
+   3.9252150913143053`*^9, {3.925215210952145*^9, 3.925215221435834*^9}, {
+   3.925215313985748*^9, 3.925215394077341*^9}, {3.9252154612897377`*^9, 
+   3.925215551681649*^9}, {3.9252156262745333`*^9, 3.925215642521014*^9}, 
+   3.925215716592069*^9, {3.925215815602063*^9, 3.92521581562183*^9}, {
+   3.925215862578208*^9, 3.925215863008811*^9}, {3.925215968180627*^9, 
+   3.9252161192114677`*^9}, {3.925216701197131*^9, 3.925216702616549*^9}, {
+   3.9252171508950872`*^9, 3.925217179122291*^9}, {3.925217388370992*^9, 
+   3.92521742368921*^9}, {3.925217489751377*^9, 3.925217561263431*^9}, {
+   3.925217591562935*^9, 3.925217697081981*^9}, {3.925217758930457*^9, 
+   3.92521776126514*^9}, 3.92521783441368*^9, {3.925217888845429*^9, 
+   3.92521794280539*^9}, {3.925218102622864*^9, 3.92521810321666*^9}, 
+   3.925218456025948*^9, {3.925218501190556*^9, 3.925218591565021*^9}, {
+   3.925218644717661*^9, 3.925218644731049*^9}, {3.925218679155992*^9, 
+   3.925218679171364*^9}, {3.92521884115501*^9, 3.925218841624*^9}, {
+   3.925218875990433*^9, 3.925218935186313*^9}, {3.925219012264701*^9, 
+   3.925219068125741*^9}, {3.925219152685097*^9, 3.925219155853697*^9}, {
+   3.925219233488142*^9, 3.925219324522629*^9}, {3.925272715573377*^9, 
+   3.9252727329102*^9}, {3.925272911749485*^9, 3.925272969108664*^9}, {
+   3.92527303645155*^9, 3.925273091778815*^9}, 3.925273201618911*^9, {
+   3.925273234281974*^9, 3.925273234632863*^9}, {3.925273290707631*^9, 
+   3.925273316279287*^9}, {3.925273347500319*^9, 3.925273354201217*^9}, {
+   3.925273405466028*^9, 3.92527343317048*^9}, {3.925273507695656*^9, 
+   3.925273629662433*^9}, {3.92527366137899*^9, 3.925273669537068*^9}, {
+   3.9252737362727013`*^9, 3.9252738113786783`*^9}, {3.925273868099477*^9, 
+   3.925273873288049*^9}, {3.925274473874545*^9, 3.925274618883564*^9}, {
+   3.925274663359171*^9, 3.925274727108466*^9}, {3.925274797265098*^9, 
+   3.92527481418395*^9}, 3.925274969776738*^9, 3.925275048328186*^9, {
+   3.925275198347209*^9, 3.925275374561921*^9}, {3.925275442761312*^9, 
+   3.925275458093297*^9}, 3.9252756178956833`*^9, {3.925275879904418*^9, 
+   3.925275884189465*^9}, {3.925276414407426*^9, 3.925276446599886*^9}, {
+   3.925276584087751*^9, 3.925276808247305*^9}, {3.925276865445356*^9, 
+   3.925276971048085*^9}, {3.925277015901103*^9, 3.925277028706427*^9}, {
+   3.925277061169359*^9, 3.925277149564414*^9}, {3.925277241514977*^9, 
+   3.925277262349659*^9}, 3.9252773200935717`*^9, {3.925277376373861*^9, 
+   3.925277388991033*^9}, {3.925277440625901*^9, 3.925277452453804*^9}, {
+   3.925277548156679*^9, 3.925277578879551*^9}, {3.925277811548468*^9, 
+   3.925277828705433*^9}, {3.925278052950986*^9, 3.925278060019432*^9}, {
+   3.930799262983829*^9, 3.930799294390871*^9}, {3.930799325005865*^9, 
+   3.930799353986343*^9}, {3.930799461952474*^9, 3.930799529095337*^9}, {
+   3.930799569797743*^9, 3.9307995770541153`*^9}, 3.93080180858912*^9, {
+   3.930803394577394*^9, 3.93080342349201*^9}},
+ CellLabel->
+  "In[209]:=",ExpressionUUID->"5cf01aeb-0358-46e1-b026-bdc3f273cba3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Solution Angle Accel:\"\>", "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         SuperscriptBox["PoleAngle", "\[Prime]\[Prime]",
+          MultilineFunction->None], "(", "t", ")"}], "\[Rule]", 
+        FractionBox[
+         RowBox[{
+          RowBox[{"1.5`", " ", 
+           RowBox[{
+            SuperscriptBox["CartPosition", "\[Prime]\[Prime]",
+             MultilineFunction->None], "(", "t", ")"}], " ", 
+           RowBox[{"cos", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "+", 
+          RowBox[{"1.5`", " ", "g", " ", 
+           RowBox[{"sin", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}]}], "l"]}], "}"}], 
+      "}"}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm["Solution Angle Accel:", 
+   TraditionalForm[{{
+     Derivative[
+       2][$CellContext`PoleAngle][$CellContext`t] -> $CellContext`l^(-1) (
+        1.5 $CellContext`g Sin[
+           $CellContext`PoleAngle[$CellContext`t]] + 1.5 Cos[
+           $CellContext`PoleAngle[$CellContext`t]] 
+         Derivative[2][$CellContext`CartPosition][$CellContext`t])}}]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.925275921176785*^9, 3.9252769994910383`*^9, 3.925277154327054*^9, 
+   3.925277243458228*^9, 3.92527728793049*^9, 3.925277326387282*^9, {
+   3.9252773779462633`*^9, 3.925277391219902*^9}, 3.9252774597080183`*^9, 
+   3.925277581779351*^9, 3.925278064489603*^9, 3.930799378292129*^9, 
+   3.93079953975353*^9, 3.9307995795884647`*^9, 3.930803431007475*^9, 
+   3.930803506641016*^9, 3.93080763413076*^9},
+ CellLabel->
+  "During evaluation of \
+In[209]:=",ExpressionUUID->"59f676ed-eb03-46ca-a1bd-4a0206636ed7"],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{
+  3.925275921176785*^9, 3.9252769994910383`*^9, 3.925277154327054*^9, 
+   3.925277243458228*^9, 3.92527728793049*^9, 3.925277326387282*^9, {
+   3.9252773779462633`*^9, 3.925277391219902*^9}, 3.9252774597080183`*^9, 
+   3.925277581779351*^9, 3.925278064489603*^9, 3.930799378292129*^9, 
+   3.93079953975353*^9, 3.9307995795884647`*^9, 3.930803431007475*^9, 
+   3.930803506641016*^9, 3.930807634131701*^9},
+ CellLabel->
+  "During evaluation of \
+In[209]:=",ExpressionUUID->"9fe239ec-859d-4fff-856a-e066a9c4899c"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Solutions:\"\>", "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["CartPosition", "\[Prime]\[Prime]",
+           MultilineFunction->None], "(", "t", ")"}], "\[Rule]", 
+         FractionBox[
+          RowBox[{"mPole", " ", 
+           RowBox[{"sin", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"0.75`", " ", "g", " ", 
+              RowBox[{"cos", "(", 
+               RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "-", 
+             RowBox[{"0.5`", " ", "l", " ", 
+              SuperscriptBox[
+               RowBox[{
+                SuperscriptBox["PoleAngle", "\[Prime]",
+                 MultilineFunction->None], "(", "t", ")"}], "2"]}]}], ")"}]}], 
+          RowBox[{
+           RowBox[{"1.`", " ", "mCart"}], "-", 
+           RowBox[{"0.75`", " ", "mPole", " ", 
+            RowBox[{
+             SuperscriptBox["cos", "2"], "(", 
+             RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "+", 
+           RowBox[{"1.`", " ", "mPole"}]}]]}], ",", 
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["PoleAngle", "\[Prime]\[Prime]",
+           MultilineFunction->None], "(", "t", ")"}], "\[Rule]", 
+         FractionBox[
+          RowBox[{
+           RowBox[{"sin", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"1.5`", " ", "g", " ", "mCart"}], "+", 
+             RowBox[{"1.5`", " ", "g", " ", "mPole"}], "-", 
+             RowBox[{"0.75`", " ", "l", " ", "mPole", " ", 
+              SuperscriptBox[
+               RowBox[{
+                SuperscriptBox["PoleAngle", "\[Prime]",
+                 MultilineFunction->None], "(", "t", ")"}], "2"], " ", 
+              RowBox[{"cos", "(", 
+               RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}]}], ")"}]}], 
+          RowBox[{"l", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"1.`", " ", "mCart"}], "-", 
+             RowBox[{"0.75`", " ", "mPole", " ", 
+              RowBox[{
+               SuperscriptBox["cos", "2"], "(", 
+               RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "+", 
+             RowBox[{"1.`", " ", "mPole"}]}], ")"}]}]]}]}], "}"}], "}"}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm["Solutions:", 
+   TraditionalForm[{{
+     Derivative[
+       2][$CellContext`CartPosition][$CellContext`t] -> $CellContext`mPole (
+         1. $CellContext`mCart + 1. $CellContext`mPole - 
+         0.75 $CellContext`mPole Cos[
+            $CellContext`PoleAngle[$CellContext`t]]^2)^(-1) Sin[
+         $CellContext`PoleAngle[$CellContext`t]] (0.75 $CellContext`g Cos[
+           $CellContext`PoleAngle[$CellContext`t]] - 0.5 $CellContext`l 
+        Derivative[1][$CellContext`PoleAngle][$CellContext`t]^2), 
+      Derivative[
+       2][$CellContext`PoleAngle][$CellContext`t] -> $CellContext`l^(-1) (
+         1. $CellContext`mCart + 1. $CellContext`mPole - 
+         0.75 $CellContext`mPole Cos[
+            $CellContext`PoleAngle[$CellContext`t]]^2)^(-1) Sin[
+         $CellContext`PoleAngle[$CellContext`t]] (
+        1.5 $CellContext`g $CellContext`mCart + 
+        1.5 $CellContext`g $CellContext`mPole - 
+        0.75 $CellContext`l $CellContext`mPole Cos[
+          $CellContext`PoleAngle[$CellContext`t]] 
+        Derivative[1][$CellContext`PoleAngle][$CellContext`t]^2)}}]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.925275921176785*^9, 3.9252769994910383`*^9, 3.925277154327054*^9, 
+   3.925277243458228*^9, 3.92527728793049*^9, 3.925277326387282*^9, {
+   3.9252773779462633`*^9, 3.925277391219902*^9}, 3.9252774597080183`*^9, 
+   3.925277581779351*^9, 3.925278064489603*^9, 3.930799378292129*^9, 
+   3.93079953975353*^9, 3.9307995795884647`*^9, 3.930803431007475*^9, 
+   3.930803506641016*^9, 3.9308076341504107`*^9},
+ CellLabel->
+  "During evaluation of \
+In[209]:=",ExpressionUUID->"17b89826-cf19-4a09-9bef-5af9a5413e52"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"paramValues", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"mCart", "->", "10.0"}], ",", 
+       RowBox[{"mPole", "->", "0.05"}], ",", 
+       RowBox[{"l", "->", "0.5"}], ",", 
+       RowBox[{"g", "->", "9.81"}], ",", 
+       RowBox[{"mPole2", "->", "0.1"}], ",", 
+       RowBox[{"l2", "->", "1.0"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Solution", " ", "for", " ", "specific", " ", "values"}], "*)"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"evaluatedSolAngle", "=", 
+     RowBox[{"solAngle", "/.", " ", "paramValues"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"evaluatedSol", "=", 
+     RowBox[{"sol", "/.", " ", "paramValues"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Display", " ", "the", " ", "solutions", " ", "in", " ", 
+     "TraditionalForm", " ", "with", " ", "specific", " ", "values"}], "*)"}],
+    "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Solution Angle Accel with specific values:\>\"", ",", 
+      RowBox[{"TraditionalForm", "[", 
+       RowBox[{"Simplify", "[", "evaluatedSolAngle", "]"}], "]"}]}], "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Solutions with specific values:\>\"", ",", 
+      RowBox[{"TraditionalForm", "[", 
+       RowBox[{"Simplify", "[", "evaluatedSol", "]"}], "]"}]}], "]"}], 
+    ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.925278018929661*^9, 3.925278036914045*^9}, {
+   3.925278236612546*^9, 3.925278244812073*^9}, 3.9252785220208387`*^9},
+ CellLabel->
+  "In[219]:=",ExpressionUUID->"8a0aa08e-394b-465e-82dc-91ae5ff54bb6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Solution Angle Accel with specific values:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         SuperscriptBox["PoleAngle", "\[Prime]\[Prime]",
+          MultilineFunction->None], "(", "t", ")"}], "\[Rule]", 
+        RowBox[{
+         RowBox[{"3.`", " ", 
+          RowBox[{
+           SuperscriptBox["CartPosition", "\[Prime]\[Prime]",
+            MultilineFunction->None], "(", "t", ")"}], " ", 
+          RowBox[{"cos", "(", 
+           RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "+", 
+         RowBox[{"29.430000000000003`", " ", 
+          RowBox[{"sin", "(", 
+           RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}]}]}], "}"}], "}"}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm["Solution Angle Accel with specific values:", 
+   TraditionalForm[{{
+     Derivative[2][$CellContext`PoleAngle][$CellContext`t] -> 
+      29.430000000000003` Sin[
+          $CellContext`PoleAngle[$CellContext`t]] + 3. Cos[
+          $CellContext`PoleAngle[$CellContext`t]] 
+        Derivative[2][$CellContext`CartPosition][$CellContext`t]}}]],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.925278033136498*^9, 3.925278037691758*^9}, 
+   3.925278069967024*^9, {3.9252782464806833`*^9, 3.925278250198804*^9}, 
+   3.925278522404433*^9, 3.930803506665667*^9, 3.930807634159074*^9},
+ CellLabel->
+  "During evaluation of \
+In[219]:=",ExpressionUUID->"46c1e5a6-f55b-44d2-89af-8ad1f3a06b15"],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{{3.925278033136498*^9, 3.925278037691758*^9}, 
+   3.925278069967024*^9, {3.9252782464806833`*^9, 3.925278250198804*^9}, 
+   3.925278522404433*^9, 3.930803506665667*^9, 3.930807634159583*^9},
+ CellLabel->
+  "During evaluation of \
+In[219]:=",ExpressionUUID->"9d2cc293-64a2-485b-a4cb-5d926e0e7f79"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Solutions with specific values:\"\>", "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["CartPosition", "\[Prime]\[Prime]",
+           MultilineFunction->None], "(", "t", ")"}], "\[Rule]", 
+         FractionBox[
+          RowBox[{
+           RowBox[{"sin", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"0.3333333333333333`", " ", 
+              SuperscriptBox[
+               RowBox[{
+                SuperscriptBox["PoleAngle", "\[Prime]",
+                 MultilineFunction->None], "(", "t", ")"}], "2"]}], "-", 
+             RowBox[{"9.809999999999999`", " ", 
+              RowBox[{"cos", "(", 
+               RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}]}], ")"}]}], 
+          RowBox[{
+           RowBox[{"1.`", " ", 
+            RowBox[{
+             SuperscriptBox["cos", "2"], "(", 
+             RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "-", 
+           "267.99999999999994`"}]]}], ",", 
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["PoleAngle", "\[Prime]\[Prime]",
+           MultilineFunction->None], "(", "t", ")"}], "\[Rule]", 
+         FractionBox[
+          RowBox[{
+           RowBox[{"sin", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"1.`", " ", 
+              SuperscriptBox[
+               RowBox[{
+                SuperscriptBox["PoleAngle", "\[Prime]",
+                 MultilineFunction->None], "(", "t", ")"}], "2"], " ", 
+              RowBox[{"cos", "(", 
+               RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "-", 
+             "7887.24`"}], ")"}]}], 
+          RowBox[{
+           RowBox[{"1.`", " ", 
+            RowBox[{
+             SuperscriptBox["cos", "2"], "(", 
+             RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "-", 
+           "267.99999999999994`"}]]}]}], "}"}], "}"}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm["Solutions with specific values:", 
+   TraditionalForm[{{
+     Derivative[
+       2][$CellContext`CartPosition][$CellContext`t] -> (-267.99999999999994` + 
+         1. Cos[
+             $CellContext`PoleAngle[$CellContext`t]]^2)^(-1) Sin[
+         $CellContext`PoleAngle[$CellContext`t]] ((-9.809999999999999) Cos[
+           $CellContext`PoleAngle[$CellContext`t]] + 
+        0.3333333333333333 
+         Derivative[1][$CellContext`PoleAngle][$CellContext`t]^2), 
+      Derivative[
+       2][$CellContext`PoleAngle][$CellContext`t] -> (-267.99999999999994` + 
+         1. Cos[
+             $CellContext`PoleAngle[$CellContext`t]]^2)^(-1) Sin[
+         $CellContext`PoleAngle[$CellContext`t]] (-7887.24 + 1. Cos[
+           $CellContext`PoleAngle[$CellContext`t]] 
+         Derivative[1][$CellContext`PoleAngle][$CellContext`t]^2)}}]],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.925278033136498*^9, 3.925278037691758*^9}, 
+   3.925278069967024*^9, {3.9252782464806833`*^9, 3.925278250198804*^9}, 
+   3.925278522404433*^9, 3.930803506665667*^9, 3.930807634164603*^9},
+ CellLabel->
+  "During evaluation of \
+In[219]:=",ExpressionUUID->"91f28074-f2cb-4c00-a0fc-0b25b3b6f921"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  StyleBox[
+   RowBox[{
+    RowBox[{"L", "=", 
+     RowBox[{"Symbol", "[", "\"\<L\>\"", "]"}]}], ";"}],
+   FontSize->16], 
+  StyleBox[" ",
+   FontSize->16], 
+  StyleBox[
+   RowBox[{"(*", 
+    RowBox[{
+     StyleBox[
+      RowBox[{"-", " ", "This"}], "Code"], 
+     StyleBox[" ", "Code"], 
+     StyleBox["is", "Code"], 
+     StyleBox[" ", "Code"], 
+     StyleBox["her", "Code"], 
+     StyleBox[" ", "Code"], 
+     StyleBox["a", "Code"], 
+     StyleBox[" ", "Code"], "half", 
+     StyleBox[" ", "Code"], 
+     StyleBox["pole", "Code"], 
+     StyleBox[" ", "Code"], 
+     StyleBox["length", "Code"]}], "*)"}],
+   FontSize->16], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Substitution", " ", "and", " ", "print"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"lSubstitution", "=", 
+    RowBox[{"l", "->", 
+     RowBox[{"2", " ", "L"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"solAngleL", " ", "=", " ", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{"solAngle", "/.", "lSubstitution"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"simplifiedSolution", "=", 
+    RowBox[{"Simplify", "[", 
+     RowBox[{"sol", "/.", " ", "lSubstitution"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Solution Angle Accel:\>\"", ",", 
+    RowBox[{"TraditionalForm", "[", "solAngleL", "]"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Print", "[", "\"\<\>\"", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Print", "[", 
+    RowBox[{"\"\<Solutions:\>\"", ",", 
+     RowBox[{"TraditionalForm", "[", "simplifiedSolution", "]"}]}], "]"}], 
+   ";"}], 
+  StyleBox["\[IndentingNewLine]",
+   FontSize->18], 
+  StyleBox["\[IndentingNewLine]",
+   FontSize->18], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  StyleBox[
+   RowBox[{"(*", 
+    RowBox[{
+    "Clear", " ", "all", " ", "previous", " ", "definitions", " ", "to", " ", 
+     "avoid", " ", "conflicts"}], "*)"}],
+   FontSize->18]}], "\[IndentingNewLine]", 
+ RowBox[{
+  StyleBox[
+   RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}],
+   FontSize->18], "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.925275557681099*^9, 3.925275584915278*^9}, {
+  3.925275648772595*^9, 3.92527574669497*^9}, {3.925275786047754*^9, 
+  3.925275786241592*^9}, {3.9252758857913322`*^9, 3.925275886196789*^9}},
+ CellLabel->
+  "In[225]:=",ExpressionUUID->"bc12d151-11ee-4297-9ebe-2f7e8499cf20"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Solution Angle Accel:\"\>", "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         SuperscriptBox["PoleAngle", "\[Prime]\[Prime]",
+          MultilineFunction->None], "(", "t", ")"}], "\[Rule]", 
+        FractionBox[
+         RowBox[{
+          RowBox[{"0.75`", " ", 
+           RowBox[{
+            SuperscriptBox["CartPosition", "\[Prime]\[Prime]",
+             MultilineFunction->None], "(", "t", ")"}], " ", 
+           RowBox[{"cos", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "+", 
+          RowBox[{"0.75`", " ", "g", " ", 
+           RowBox[{"sin", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}]}], "L"]}], "}"}], 
+      "}"}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm["Solution Angle Accel:", 
+   TraditionalForm[{{
+     Derivative[
+       2][$CellContext`PoleAngle][$CellContext`t] -> $CellContext`L^(-1) (
+        0.75 $CellContext`g Sin[
+           $CellContext`PoleAngle[$CellContext`t]] + 0.75 Cos[
+           $CellContext`PoleAngle[$CellContext`t]] 
+         Derivative[2][$CellContext`CartPosition][$CellContext`t])}}]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.925275923258155*^9, 3.930803506696912*^9, 
+  3.930807634181685*^9},
+ CellLabel->
+  "During evaluation of \
+In[225]:=",ExpressionUUID->"20feb463-5b52-4da9-a5fd-e5db53ec0af7"],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{3.925275923258155*^9, 3.930803506696912*^9, 
+  3.93080763418224*^9},
+ CellLabel->
+  "During evaluation of \
+In[225]:=",ExpressionUUID->"ebfaa20c-6afa-4c7d-a2cc-515a2291ecd5"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Solutions:\"\>", "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["CartPosition", "\[Prime]\[Prime]",
+           MultilineFunction->None], "(", "t", ")"}], "\[Rule]", 
+         FractionBox[
+          RowBox[{"mPole", " ", 
+           RowBox[{"sin", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"0.75`", " ", "g", " ", 
+              RowBox[{"cos", "(", 
+               RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "-", 
+             RowBox[{"1.`", " ", "L", " ", 
+              SuperscriptBox[
+               RowBox[{
+                SuperscriptBox["PoleAngle", "\[Prime]",
+                 MultilineFunction->None], "(", "t", ")"}], "2"]}]}], ")"}]}], 
+          RowBox[{
+           RowBox[{"1.`", " ", "mCart"}], "-", 
+           RowBox[{"0.75`", " ", "mPole", " ", 
+            RowBox[{
+             SuperscriptBox["cos", "2"], "(", 
+             RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "+", 
+           RowBox[{"1.`", " ", "mPole"}]}]]}], ",", 
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["PoleAngle", "\[Prime]\[Prime]",
+           MultilineFunction->None], "(", "t", ")"}], "\[Rule]", 
+         FractionBox[
+          RowBox[{
+           RowBox[{"sin", "(", 
+            RowBox[{"PoleAngle", "(", "t", ")"}], ")"}], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"0.75`", " ", "g", " ", "mCart"}], "+", 
+             RowBox[{"0.75`", " ", "g", " ", "mPole"}], "-", 
+             RowBox[{"0.75`", " ", "L", " ", "mPole", " ", 
+              SuperscriptBox[
+               RowBox[{
+                SuperscriptBox["PoleAngle", "\[Prime]",
+                 MultilineFunction->None], "(", "t", ")"}], "2"], " ", 
+              RowBox[{"cos", "(", 
+               RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}]}], ")"}]}], 
+          RowBox[{"L", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"1.`", " ", "mCart"}], "-", 
+             RowBox[{"0.75`", " ", "mPole", " ", 
+              RowBox[{
+               SuperscriptBox["cos", "2"], "(", 
+               RowBox[{"PoleAngle", "(", "t", ")"}], ")"}]}], "+", 
+             RowBox[{"1.`", " ", "mPole"}]}], ")"}]}]]}]}], "}"}], "}"}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm["Solutions:", 
+   TraditionalForm[{{
+     Derivative[
+       2][$CellContext`CartPosition][$CellContext`t] -> $CellContext`mPole (
+         1. $CellContext`mCart + 1. $CellContext`mPole - 
+         0.75 $CellContext`mPole Cos[
+            $CellContext`PoleAngle[$CellContext`t]]^2)^(-1) Sin[
+         $CellContext`PoleAngle[$CellContext`t]] (0.75 $CellContext`g Cos[
+           $CellContext`PoleAngle[$CellContext`t]] - 1. $CellContext`L 
+        Derivative[1][$CellContext`PoleAngle][$CellContext`t]^2), 
+      Derivative[
+       2][$CellContext`PoleAngle][$CellContext`t] -> $CellContext`L^(-1) (
+         1. $CellContext`mCart + 1. $CellContext`mPole - 
+         0.75 $CellContext`mPole Cos[
+            $CellContext`PoleAngle[$CellContext`t]]^2)^(-1) Sin[
+         $CellContext`PoleAngle[$CellContext`t]] (
+        0.75 $CellContext`g $CellContext`mCart + 
+        0.75 $CellContext`g $CellContext`mPole - 
+        0.75 $CellContext`L $CellContext`mPole Cos[
+          $CellContext`PoleAngle[$CellContext`t]] 
+        Derivative[1][$CellContext`PoleAngle][$CellContext`t]^2)}}]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.925275923258155*^9, 3.930803506696912*^9, 
+  3.9308076341973267`*^9},
+ CellLabel->
+  "During evaluation of \
+In[225]:=",ExpressionUUID->"8f1c05c1-2857-4b9c-86e2-509dfe6ed111"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1715, 911},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"14.0 for Mac OS X ARM (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"1874d1ec-6411-4350-b50e-43afdd129b39"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 6431, 212, 600, "Input",ExpressionUUID->"a545b516-a0bf-44a0-aa61-d5d851698a2d"],
+Cell[CellGroupData[{
+Cell[7036, 238, 1469, 38, 24, "Print",ExpressionUUID->"067e61df-29cd-4d84-9352-2cb5a5bf1bd6"],
+Cell[8508, 278, 1514, 38, 25, "Print",ExpressionUUID->"fdf96c0a-c072-4d1e-9243-f29fae9773c8"],
+Cell[10025, 318, 1989, 49, 35, "Print",ExpressionUUID->"8fa139e6-fc5e-4e07-ba38-a54ff835b87d"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12063, 373, 11568, 306, 705, "Input",ExpressionUUID->"5cf01aeb-0358-46e1-b026-bdc3f273cba3"],
+Cell[CellGroupData[{
+Cell[23656, 683, 1793, 44, 40, "Print",ExpressionUUID->"59f676ed-eb03-46ca-a1bd-4a0206636ed7"],
+Cell[25452, 729, 565, 10, 24, "Print",ExpressionUUID->"9fe239ec-859d-4fff-856a-e066a9c4899c"],
+Cell[26020, 741, 4141, 95, 50, "Print",ExpressionUUID->"17b89826-cf19-4a09-9bef-5af9a5413e52"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30210, 842, 1803, 46, 241, "Input",ExpressionUUID->"8a0aa08e-394b-465e-82dc-91ae5ff54bb6"],
+Cell[CellGroupData[{
+Cell[32038, 892, 1550, 38, 24, "Print",ExpressionUUID->"46c1e5a6-f55b-44d2-89af-8ad1f3a06b15"],
+Cell[33591, 932, 350, 6, 24, "Print",ExpressionUUID->"9d2cc293-64a2-485b-a4cb-5d926e0e7f79"],
+Cell[33944, 940, 3354, 82, 48, "Print",ExpressionUUID->"91f28074-f2cb-4c00-a0fc-0b25b3b6f921"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37347, 1028, 2571, 76, 389, "Input",ExpressionUUID->"bc12d151-11ee-4297-9ebe-2f7e8499cf20"],
+Cell[CellGroupData[{
+Cell[39943, 1108, 1462, 39, 40, "Print",ExpressionUUID->"20feb463-5b52-4da9-a5fd-e5db53ec0af7"],
+Cell[41408, 1149, 228, 5, 24, "Print",ExpressionUUID->"ebfaa20c-6afa-4c7d-a2cc-515a2291ecd5"],
+Cell[41639, 1156, 3807, 90, 50, "Print",ExpressionUUID->"8f1c05c1-2857-4b9c-86e2-509dfe6ed111"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
