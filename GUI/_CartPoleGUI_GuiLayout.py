@@ -395,7 +395,7 @@ class CartPole_GuiLayout:
         self.layout = layout
 
     def get_csv_name_from_gui(self):
-        self.textbox.text()
+        return self.textbox.text()
 
 
 def zero_angle_layout():
