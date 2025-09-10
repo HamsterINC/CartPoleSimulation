@@ -29,6 +29,8 @@ STATE_VARIABLES_FOR_PREDICTOR = np.sort([
     "positionD",
 ])
 
+STATE_INDICES = {x: np.where(STATE_VARIABLES_FOR_PREDICTOR == x)[0][0] for x in STATE_VARIABLES_FOR_PREDICTOR}
+
 CONTROL_INPUTS_FOR_PREDICTOR = np.sort([
     "Q_applied",  # When running ODE on data from simulated cartpole
     # "Q",  # When running ODE on data from physical cartpole
