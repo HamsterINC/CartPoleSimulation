@@ -130,3 +130,7 @@ remote:
 difflg:
   controller_logging: False
   input_at_input: False
+c:
+  controller_file: "lqr.c"  # Default to LQR, user can change this
+  firmware_path: "Firmware/Src/General"
+  controller_logging: True
