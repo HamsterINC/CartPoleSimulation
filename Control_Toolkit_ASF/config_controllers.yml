@@ -116,10 +116,6 @@ secloc:
   controller_logging: True
 fpga:
   seed: null                            # If null, random seed based on datetime is used
-  PATH_TO_MODELS: './CartPoleSimulation/SI_Toolkit_ASF/Experiments/Experiment-24-quant-10-shiftD-1/Models'
-  net_name: 'Dense-7IN-32H1-32H2-1OUT-1'  # TF
-#  net_name: 'GRU-6IN-32H1-32H2-1OUT-0'  # Pytorch
-  input_at_input: False
   controller_logging: True
   SERIAL_PORT: 1
   SERIAL_BAUD: 230400
