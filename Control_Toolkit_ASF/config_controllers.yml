@@ -133,5 +133,5 @@ difflg:
 c:
   controller_file: "lqr.c"  # Default to LQR, user can change this
   ops_name: "LQR_Ops"       # Name of the ControllerOps structure in the C file
-  firmware_path: "Firmware/Src/General"
+  firmware_path: "../Firmware/Src/General"
   controller_logging: True
