@@ -114,7 +114,7 @@ secloc:
   pid_Ki: 1.0
   #secloc_motor_map: 128
   controller_logging: True
-fpga:
+embedded:
   seed: null                            # If null, random seed based on datetime is used
   controller_logging: True
   SERIAL_PORT: 1
