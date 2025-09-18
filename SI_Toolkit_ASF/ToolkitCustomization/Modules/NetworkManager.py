@@ -76,14 +76,24 @@ class NetworkManager:
         parent_folder = os.path.join(base.path_to_models, base.parent_net_name)
         files_to_copy = [
             os.path.basename(base.path_to_normalization_info),
-            "normalization_vec_a.csv",
-            "normalization_vec_b.csv",
-            "denormalization_vec_A.csv",
-            "denormalization_vec_B.csv",
             f"{base.parent_net_name}.txt",
         ]
         for fname in files_to_copy:
             copy_file(parent_folder, dst_folder, fname)
+        
+        # Copy normalization vectors from norm_vectors subfolder
+        norm_vectors_src = os.path.join(parent_folder, "norm_vectors")
+        norm_vectors_dst = os.path.join(dst_folder, "norm_vectors")
+        if os.path.exists(norm_vectors_src):
+            os.makedirs(norm_vectors_dst, exist_ok=True)
+            norm_files = [
+                "normalization_vec_a.csv",
+                "normalization_vec_b.csv",
+                "denormalization_vec_A.csv",
+                "denormalization_vec_B.csv",
+            ]
+            for fname in norm_files:
+                copy_file(norm_vectors_src, norm_vectors_dst, fname)
 
         # — Rewrite the descriptor to reflect the *new* network name —
         old_txt = os.path.join(dst_folder, f"{base.parent_net_name}.txt")

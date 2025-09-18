@@ -19,12 +19,18 @@ class DiffLogicGateController():
         )
         path_to_model = os.path.join(os.path.dirname(__file__), 'difflg_cartpole.pth')
         self.model.load_state_dict(torch.load(path_to_model))
-        norm_vec_path = os.path.join(os.path.dirname(__file__), norm_vec_path)
-        if os.path.exists(norm_vec_path):
-            self.norm_vec = pd.read_csv(norm_vec_path, header=None).values.flatten()
+        
+        # Try to load from norm_vectors subfolder first, then fallback to root directory
+        norm_vec_path_full = os.path.join(os.path.dirname(__file__), 'norm_vectors', norm_vec_path)
+        if not os.path.exists(norm_vec_path_full):
+            # Fallback to root directory for backward compatibility
+            norm_vec_path_full = os.path.join(os.path.dirname(__file__), norm_vec_path)
+        
+        if os.path.exists(norm_vec_path_full):
+            self.norm_vec = pd.read_csv(norm_vec_path_full, header=None).values.flatten()
             self.norm_vec = np.array(self.norm_vec, dtype=np.float32)
         else:
-            print(f"File {norm_vec_path} does not exist.")
+            print(f"File {norm_vec_path_full} does not exist.")
         self.model.eval()
         self.thresholds = torch.linspace(0, 1, 100)
     
