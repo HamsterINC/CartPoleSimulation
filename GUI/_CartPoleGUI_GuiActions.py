@@ -31,6 +31,9 @@ class CartPole_GuiActions:
     def __init__(self, gui_layout, *args, **kwargs):
 
         self.gui = gui_layout
+        
+        # Flag to prevent redundant controller conversions during initialization
+        self._initializing = True
 
         # Import variables from config
         config = load_config('config_gui.yml')
@@ -163,6 +166,9 @@ class CartPole_GuiActions:
         # region Open controller-specific popup windows
         self.open_additional_controller_widget()
         # endregion
+        
+        # Mark initialization as complete to allow controller changes
+        self._initializing = False
 
         # region Activate functions capturing mouse movements and clicks over the slider
 
