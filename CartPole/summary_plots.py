@@ -58,8 +58,6 @@ def summary_plots(dict_history, adaptive_mode=False, title=''):
 
     fig.align_ylabels()
 
-    plt.show()
-
     return fig, axs
 
 # endregion
