@@ -17,6 +17,7 @@ tensorflow-probability
 Pillow
 gymnasium
 pyserial
+pandas
 
 do-mpc==4.1.1
 casadi

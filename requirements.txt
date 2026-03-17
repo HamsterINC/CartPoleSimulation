@@ -1,2 +1,2 @@
 -r CPS_list_of_packages.txt
--e ./SI_Toolkit
+./SI_Toolkit

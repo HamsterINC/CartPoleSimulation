@@ -10,17 +10,23 @@ A class predictor_output_augmentation which is used to augment the output of the
 E.g. the neural network predicts sin and cos this class can take care of adding angle to the predictor output.
 """
 
-# The STATE_INDICES, STATE_VARIABLES, CONTROL_INPUTS import is needed
-# as from here the variables are imported to other files
-from CartPole.state_utilities import STATE_INDICES, STATE_VARIABLES, CONTROL_INPUTS, CONTROL_INPUTS_LEN, CONTROL_INDICES
 
 from SI_Toolkit.computation_library import NumpyLibrary
+from SI_Toolkit.Compile import CompileAdaptive
 from CartPole.cartpole_equations import CartPoleEquations
 
-from SI_Toolkit.Compile import CompileAdaptive
+import numpy as np
 
-from CartPole.state_utilities import ANGLE_IDX, ANGLE_COS_IDX, ANGLE_SIN_IDX
+STATE_VARIABLES = np.sort(["angle", "angleD", "angle_cos", "angle_sin", "position", "positionD"])  # Change this or import from another file
+STATE_INDICES = {x: np.where(STATE_VARIABLES == x)[0][0] for x in STATE_VARIABLES}
+CONTROL_INPUTS = np.sort(["Q"])  # Change this or import from another file
+CONTROL_INDICES = {x: np.where(CONTROL_INPUTS == x)[0][0] for x in CONTROL_INPUTS}
 
+# Check for Ellipsis and raise an error if found
+if Ellipsis in STATE_VARIABLES or Ellipsis in CONTROL_INPUTS:
+    raise ValueError("You must replace the ... placeholders with actual variables names.")
+CONTROL_INPUTS_FOR_PREDICTOR = CONTROL_INPUTS
+STATE_VARIABLES_FOR_PREDICTOR = STATE_VARIABLES
 
 class next_state_predictor_ODE:
 
@@ -30,11 +36,11 @@ class next_state_predictor_ODE:
                  lib,
                  batch_size=1,
                  variable_parameters=None,
-                 disable_individual_compilation=False,
-                 **kwargs,
+                 disable_individual_compilation=False, 
+                 **kwargs
                  ):
         self.lib = lib
-        self.intermediate_steps = int(intermediate_steps)
+        self.intermediate_steps = intermediate_steps
         self.t_step = float(dt / float(self.intermediate_steps))
         self.variable_parameters = variable_parameters
 
@@ -53,15 +59,8 @@ class next_state_predictor_ODE:
         else:
             pole_length = self.lib.to_tensor(self.cpe.params.L, dtype=self.lib.float32)
 
-
-        if self.variable_parameters is not None and hasattr(self.variable_parameters, 'm_pole'):
-            pole_mass = self.lib.to_tensor(self.variable_parameters.m_pole, dtype=self.lib.float32)
-        else:
-            pole_mass = self.lib.to_tensor(self.cpe.params.m_pole, dtype=self.lib.float32)
-
         Q = Q[..., 0]  # Removes features dimension, specific for cartpole as it has only one control input
-        u = self.cpe.Q2u(Q)
-        s_next = self.cpe.cartpole_fine_integration(s, u=u, t_step=self.t_step, intermediate_steps=self.intermediate_steps, L=pole_length, m_pole=pole_mass)
+        s_next = self.cpe.cartpole_fine_integration(s, u=Q, t_step=self.t_step, intermediate_steps=self.intermediate_steps, L=pole_length)
 
         return s_next
 

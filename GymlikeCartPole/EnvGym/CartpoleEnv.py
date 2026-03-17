@@ -22,7 +22,7 @@ class CartPoleEnv(gym.Env[np.ndarray, Union[int, np.ndarray]]):
     def __init__(
         self,
         render_mode: Optional[str] = None,
-        max_episode_steps: int = 500,
+        max_episode_steps: int = 1000,
     ):
         self.max_episode_steps = max_episode_steps
 
