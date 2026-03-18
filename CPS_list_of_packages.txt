@@ -1,9 +1,6 @@
-gym
 imageio
 engineering_notation
 gpflow
-gym
-pygame
 numba
 pip
 pygame
@@ -19,7 +16,7 @@ gymnasium
 pyserial
 pandas
 
-do-mpc==4.1.1
+do-mpc
 casadi
 
 hls4ml

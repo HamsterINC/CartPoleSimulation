@@ -1,2 +1,2 @@
 -r CPS_list_of_packages.txt
-./SI_Toolkit
+-r ./SI_Toolkit/requirements.txt
