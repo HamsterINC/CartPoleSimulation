@@ -141,7 +141,12 @@ class CartPoleEquations:
     def __init__(self, lib=NumpyLibrary(), get_parameters_from=None, numba_compiled=False):
         self.lib = lib
         self.params = CartPoleParameters(lib, get_parameters_from)
-        self.euler_step = CompileAdaptive(self.lib)(euler_step)  # This is a nested function, still it was compiled separately before for TF. TODO: Check if it is needed to compile it separately
+
+        if self.lib.lib == 'Numpy':
+            self.euler_step = euler_step
+        else:
+            self.euler_step = CompileAdaptive(self.lib)(euler_step)
+        # self.euler_step = CompileAdaptive(self.lib)(euler_step)  # This is a nested function, still it was compiled separately before for TF. TODO: Check if it is needed to compile it separately
 
         if numba_compiled:
             self._cartpole_ode = _cartpole_ode_numba
