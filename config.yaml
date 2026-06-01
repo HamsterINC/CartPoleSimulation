@@ -1,0 +1,46 @@
+# Global Experiment Settings
+experiment:
+  env: "inverted_pendulum" # Cartpole-V1, DemoCartpoleBalance, DemoCartpoleSwingup, CartPoleBalance, CartpoleSwingup, inverted_pendulum
+  n_train_episodes: 100000
+  n_eval_episodes: 50
+  seed_offset: 1000
+  max_steps: 2000
+  render_training: true
+
+# Algorithm Specific Hyperparameters
+policies:
+  Q-learning:
+    lr: 0.1
+    gamma: 0.99
+    eps: 1.0
+    eps_min: 0.05
+    eps_decay: 0.995
+  SARSA:
+    lr: 0.1
+    gamma: 0.99
+    eps: 1.0
+    eps_min: 0.05
+    eps_decay: 0.995
+  DQN:
+    lr: 1e-3
+    buffer_size: 10000
+    batch_size: 64
+    gamma: 0.99
+  PPO:
+    lr: 3e-4
+    gamma: 0.995
+    lam: 0.95
+    clip_eps: 0.2
+    batch_size: 256
+    entropy_coef: 0.005
+    epochs: 10
+    horizon: 1000
+    hidden_layer: 128
+  OnlineActorCritic:
+    lr: 5e-5
+    gamma: 0.99
+
+fpga:
+  sequences: 4
+  precision: 16
+  fully_connected: true
